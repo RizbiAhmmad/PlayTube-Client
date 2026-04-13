@@ -1,6 +1,6 @@
-const LoginPage =()=>{
+const LoginPage = () => {
     return (
-        <div>Login Page</div>
+        <div>LoginPage</div>
     )
 }
 
