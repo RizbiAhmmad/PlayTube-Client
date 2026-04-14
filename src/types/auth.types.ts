@@ -13,3 +13,5 @@ export interface ILoginResponse {
     emailVerified: boolean;
   };
 }
+
+export type IRegisterResponse = ILoginResponse;
