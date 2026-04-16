@@ -1,10 +1,12 @@
 import { getMediaById } from "@/services/media.services"
+import { getUserInfo } from "@/services/auth.services"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Calendar, Film, Play, Star, Users, Video, CreditCard } from "lucide-react"
+import { Calendar, Film, Play, Star, Users, Video } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import BuyNowButton from "@/components/modules/Media/BuyNowButton"
 
 interface MediaDetailsPageProps {
   params: Promise<{ id: string }>
@@ -13,6 +15,7 @@ interface MediaDetailsPageProps {
 const MediaDetailsPage = async ({ params }: MediaDetailsPageProps) => {
   const { id } = await params
   const { data: media } = await getMediaById(id)
+  const user = await getUserInfo()
 
   if (!media) {
     notFound()
@@ -77,10 +80,11 @@ const MediaDetailsPage = async ({ params }: MediaDetailsPageProps) => {
 
               <div className="flex flex-wrap gap-4 pt-4">
                 {media.pricingType === "PREMIUM" ? (
-                  <Button size="lg" className="h-14 gap-3 bg-primary px-8 text-lg font-bold shadow-xl shadow-primary/20 hover:scale-105 transition-transform">
-                    <CreditCard className="size-6" />
-                    Buy Now for ${media.price}
-                  </Button>
+                  <BuyNowButton 
+                    mediaId={media.id} 
+                    amount={media.price || 0} 
+                    userId={user?.id} 
+                  />
                 ) : (
                   <Link href={media.streamingUrl} target="_blank">
                     <Button size="lg" className="h-14 gap-3 bg-primary px-8 text-lg font-bold shadow-xl shadow-primary/20 hover:scale-105 transition-transform">
