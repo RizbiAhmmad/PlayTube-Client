@@ -189,7 +189,7 @@ const MediaList = ({ initialQueryString }: { initialQueryString: string }) => {
             Browse <span className="text-primary">Media</span>
           </h1>
           <p className="text-sm text-muted-foreground md:text-base">
-            Showing {meta?.total || medias.length} items from our database.
+            Showing {meta?.total || medias.length} items.
           </p>
         </div>
 
