@@ -3,16 +3,55 @@
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import { IMedia } from "@/types/media.types"
-import { Star } from "lucide-react"
+import { Bookmark, BookmarkCheck, Star } from "lucide-react"
+import { useEffect, useState } from "react"
+import { addToWatchlist, removeFromWatchlist } from "@/services/watchlist.services"
+import { toast } from "sonner"
+import { useQueryClient } from "@tanstack/react-query"
 import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
 
 interface MediaCardProps {
   media: IMedia
+  initialIsWatchlisted?: boolean
 }
 
-const MediaCard = ({ media }: MediaCardProps) => {
+const MediaCard = ({ media, initialIsWatchlisted = false }: MediaCardProps) => {
+  const [isWatchlisted, setIsWatchlisted] = useState(initialIsWatchlisted)
+  const [isActing, setIsActing] = useState(false)
+  const queryClient = useQueryClient()
+
+  useEffect(() => {
+    setIsWatchlisted(initialIsWatchlisted)
+  }, [initialIsWatchlisted])
+
+  const handleWatchlistToggle = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    
+    if (isActing) return
+    setIsActing(true)
+
+    try {
+      if (isWatchlisted) {
+        await removeFromWatchlist(media.id)
+        setIsWatchlisted(false)
+        toast.success(`Removed "${media.title}" from watchlist`)
+      } else {
+        await addToWatchlist(media.id)
+        setIsWatchlisted(true)
+        toast.success(`"${media.title}" added to watchlist`)
+      }
+      // Refresh the global watchlist query so other components stay updated
+      queryClient.invalidateQueries({ queryKey: ["my-watchlist"] })
+    } catch (error) {
+      toast.error("Failed to update watchlist")
+      console.error("Error updating watchlist:", error)
+    } finally {
+      setIsActing(false)
+    }
+  }
   return (
     <motion.div
       whileHover={{ y: -8 }}
@@ -61,6 +100,19 @@ const MediaCard = ({ media }: MediaCardProps) => {
             {media.releaseYear}
           </div>
         </Link>
+
+        {/* Watchlist Toggle Button */}
+        <button
+          onClick={handleWatchlistToggle}
+          disabled={isActing}
+          className={`absolute top-3 right-3 z-10 p-2 rounded-full backdrop-blur-md border border-white/20 transition-all duration-300 hover:scale-110 active:scale-95 ${
+            isWatchlisted 
+            ? "bg-primary text-primary-foreground" 
+            : "bg-black/40 text-white hover:bg-black/60"
+          }`}
+        >
+          {isWatchlisted ? <BookmarkCheck className="size-4" /> : <Bookmark className="size-4" />}
+        </button>
 
         {/* Content Section */}
         <div className="flex flex-1 flex-col p-5">

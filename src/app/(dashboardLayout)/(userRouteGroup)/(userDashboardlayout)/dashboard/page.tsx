@@ -42,6 +42,10 @@ const UserDashboardPage = () => {
         fetchData()
     }, [])
 
+    const lastPurchase = recentPayments.find(p => p.mediaId);
+    const resumeLink = lastPurchase?.media?.streamingUrl || (lastPurchase ? `/media/${lastPurchase.mediaId}` : "/media");
+    const isExternal = resumeLink.startsWith('http');
+
     if (isLoading) {
         return (
             <div className="flex h-[60vh] items-center justify-center">
@@ -137,13 +141,6 @@ const UserDashboardPage = () => {
 
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
                 {/* Recent Purchases */}
-                {(() => {
-                    const lastPurchase = recentPayments.find(p => p.mediaId);
-                    const resumeLink = lastPurchase?.media?.streamingUrl || (lastPurchase ? `/media/${lastPurchase.mediaId}` : "/media");
-                    const isExternal = resumeLink.startsWith('http');
-                    
-                    return (
-                        <>
                 <motion.div 
                     variants={cardVariants}
                     className="lg:col-span-2 rounded-3xl border bg-card shadow-sm"
@@ -204,6 +201,7 @@ const UserDashboardPage = () => {
                                         src={lastPurchase.media.thumbnail || ""} 
                                         alt={lastPurchase.media.title} 
                                         fill 
+                                        priority
                                         className="object-cover transition-transform duration-500 group-hover:scale-110"
                                         sizes="300px"
                                     />
@@ -256,9 +254,6 @@ const UserDashboardPage = () => {
 
                     
                 </motion.div>
-                </>
-                    )
-                })()}
             </div>
         </motion.div>
     )

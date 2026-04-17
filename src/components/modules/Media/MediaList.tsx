@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 import { useServerManagedDataTable } from "@/hooks/useServerManagedDataTable"
@@ -11,6 +12,7 @@ import { useQuery } from "@tanstack/react-query"
 import { useSearchParams } from "next/navigation"
 import { useMemo } from "react"
 import MediaCard from "./MediaCard"
+import { getMyWatchlist } from "@/services/watchlist.services"
 import DataTableSearch from "@/components/shared/table/DataTableSearch"
 import DataTableFilters, { DataTableFilterConfig, DataTableFilterValues } from "@/components/shared/table/DataTableFilters"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -149,6 +151,15 @@ const MediaList = ({ initialQueryString }: { initialQueryString: string }) => {
     queryFn: () => getMediaList(queryString),
   })
 
+  const { data: watchlistResponse } = useQuery({
+    queryKey: ["my-watchlist"],
+    queryFn: () => getMyWatchlist(),
+  })
+
+  const watchlistMediaIds = useMemo(() => {
+    return new Set(watchlistResponse?.data?.map((item: any) => item.mediaId) || [])
+  }, [watchlistResponse])
+
   const medias = mediaResponse?.data ?? []
   const meta = mediaResponse?.meta
 
@@ -241,7 +252,11 @@ const MediaList = ({ initialQueryString }: { initialQueryString: string }) => {
         <>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:gap-8">
             {medias.map((media) => (
-              <MediaCard key={media.id} media={media} />
+              <MediaCard 
+                key={media.id} 
+                media={media} 
+                initialIsWatchlisted={watchlistMediaIds.has(media.id)}
+              />
             ))}
           </div>
 
