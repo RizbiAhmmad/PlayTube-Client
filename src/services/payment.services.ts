@@ -2,6 +2,7 @@
 "use server";
 
 import { httpClient } from "@/lib/axios/httpClient";
+import { IPayment } from "@/types/dashboard.types";
 
 export interface ICreateCheckoutSessionPayload {
   userId: string;
@@ -21,6 +22,16 @@ export const createCheckoutSession = async (
     return res;
   } catch (error) {
     console.error("Error creating checkout session:", error);
+    throw error;
+  }
+};
+
+export const getMyPayments = async () => {
+  try {
+    const res = await httpClient.get<IPayment[]>("/payments/my-payments");
+    return res;
+  } catch (error) {
+    console.error("Error fetching payment history:", error);
     throw error;
   }
 };
