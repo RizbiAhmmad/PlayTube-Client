@@ -53,6 +53,11 @@ export const getReviewsByMedia = async (mediaId: string) => {
   return res;
 };
 
+export const getAllReviews = async (params?: Record<string, unknown>) => {
+  const res = await httpClient.get<IReview[]>("/reviews", { params });
+  return res;
+};
+
 export const deleteMyReview = async (reviewId: string) => {
   const res = await httpClient.delete<IReview>(`/reviews/${reviewId}`);
   return res;
