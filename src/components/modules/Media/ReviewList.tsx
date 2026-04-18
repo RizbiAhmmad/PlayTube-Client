@@ -1,20 +1,24 @@
 "use client"
 
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { getReviewsByMedia, IReview } from "@/services/review.services"
+import { getLikesByReview, toggleLike, ILike } from "@/services/like.services"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
-import { Star, MessageSquare, ThumbsUp, Calendar, AlertTriangle, Eye } from "lucide-react"
+import { Star, MessageSquare, ThumbsUp, Calendar, AlertTriangle, Eye, Loader2 } from "lucide-react"
 import { format } from "date-fns"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
+import { toast } from "sonner"
+import { cn } from "@/lib/utils"
 
 interface ReviewListProps {
   mediaId: string
+  currentUserId?: string
 }
 
-const ReviewList = ({ mediaId }: ReviewListProps) => {
+const ReviewList = ({ mediaId, currentUserId }: ReviewListProps) => {
   const { data: reviewsResponse, isLoading } = useQuery({
     queryKey: ["media-reviews", mediaId],
     queryFn: () => getReviewsByMedia(mediaId),
@@ -63,15 +67,42 @@ const ReviewList = ({ mediaId }: ReviewListProps) => {
       </div>
       
       {reviews.map((review) => (
-        <ReviewCard key={review.id} review={review} />
+        <ReviewCard key={review.id} review={review} currentUserId={currentUserId} />
       ))}
     </div>
   )
 }
 
-const ReviewCard = ({ review }: { review: IReview }) => {
+const ReviewCard = ({ review, currentUserId }: { review: IReview, currentUserId?: string }) => {
+  const queryClient = useQueryClient()
   const [showSpoiler, setShowSpoiler] = useState(false)
   const isSpoiler = review.spoiler && !showSpoiler
+
+  const { data: likesResponse, isLoading: isLoadingLikes } = useQuery({
+    queryKey: ["review-likes", review.id],
+    queryFn: () => getLikesByReview(review.id),
+  })
+
+  const likes = likesResponse?.data || []
+  const isLikedByMe = currentUserId ? likes.some((like: ILike) => like.userId === currentUserId) : false
+
+  const { mutate: handleLikeToggle, isPending: isToggling } = useMutation({
+    mutationFn: () => toggleLike(review.id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["review-likes", review.id] })
+    },
+    onError: () => {
+      toast.error("Failed to update like status")
+    }
+  })
+
+  const onLikeClick = () => {
+    if (!currentUserId) {
+      toast.error("You must be logged in to like a review")
+      return
+    }
+    handleLikeToggle()
+  }
 
   return (
     <div className="relative group rounded-3xl border bg-card/50 p-6 shadow-sm transition-all hover:shadow-md hover:border-primary/20">
@@ -148,11 +179,17 @@ const ReviewCard = ({ review }: { review: IReview }) => {
         {/* Footer Actions */}
         {!isSpoiler && (
            <div className="flex items-center gap-6 pt-4 border-t border-muted/50">
-              <button className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-                <ThumbsUp className="size-4" />
-                <span className="text-xs font-bold">{review._count?.likes || 0}</span>
+              <button 
+                onClick={onLikeClick}
+                disabled={isToggling}
+                className={cn("flex items-center gap-2 transition-colors", 
+                  isLikedByMe ? "text-primary hover:text-primary/80" : "text-muted-foreground hover:text-primary"
+                )}
+              >
+                {isToggling ? <Loader2 className="size-4 animate-spin" /> : <ThumbsUp className={cn("size-4", isLikedByMe && "fill-current")} />}
+                <span className="text-xs font-bold">{isLoadingLikes ? "-" : likes.length}</span>
               </button>
-              <button className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+              <button className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors cursor-not-allowed opacity-70">
                 <MessageSquare className="size-4" />
                 <span className="text-xs font-bold">{review._count?.comments || 0}</span>
               </button>

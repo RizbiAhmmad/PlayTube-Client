@@ -155,9 +155,8 @@ const MediaDetailsPage = async ({ params }: MediaDetailsPageProps) => {
               </h2>
               
               <div className="flex flex-col-reverse lg:flex-row gap-12 items-start">
-                {/* List of Reviews */}
                 <div className="flex-1 w-full">
-                  <ReviewList mediaId={media.id} />
+                  <ReviewList mediaId={media.id} currentUserId={user?.id} />
                 </div>
                 
                 {/* Form or Login Prompt */}
