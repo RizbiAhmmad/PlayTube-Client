@@ -201,7 +201,7 @@ const EditMediaFormModal = ({
                   <div className="space-y-2">
                     <Label>Thumbnail (Optional)</Label>
                     <div className="relative h-32 w-full overflow-hidden rounded-lg border bg-muted">
-                        {preview && <Image src={preview} alt="Thumbnail" fill className="object-cover" />}
+                        {preview && <Image src={preview} alt="Thumbnail" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />}
                         <label className="absolute inset-0 flex cursor-pointer items-center justify-center bg-black/40 opacity-0 transition-opacity hover:opacity-100">
                            <Upload className="size-8 text-white" />
                            <Input type="file" className="hidden" accept="image/*" onChange={handleFileChange} />

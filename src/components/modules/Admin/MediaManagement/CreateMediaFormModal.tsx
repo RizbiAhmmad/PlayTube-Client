@@ -218,7 +218,7 @@ const CreateMediaFormModal = () => {
                       </label>
                     ) : (
                       <div className="relative h-32 w-full overflow-hidden rounded-lg border">
-                        <Image src={preview} alt="Preview" fill className="object-cover" />
+                        <Image src={preview} alt="Preview" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
                         <Button type="button" variant="destructive" size="icon" className="absolute right-1 top-1 size-6 rounded-full" onClick={() => {setFile(null); setPreview(null);}}>
                           <X className="size-3" />
                         </Button>

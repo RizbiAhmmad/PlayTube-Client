@@ -7,6 +7,8 @@ import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import BuyNowButton from "@/components/modules/Media/BuyNowButton"
+import ReviewForm from "@/components/modules/Media/ReviewForm"
+import ReviewList from "@/components/modules/Media/ReviewList"
 
 interface MediaDetailsPageProps {
   params: Promise<{ id: string }>
@@ -29,6 +31,7 @@ const MediaDetailsPage = async ({ params }: MediaDetailsPageProps) => {
           src={media.thumbnail}
           alt={media.title}
           fill
+          sizes="100vw"
           className="object-cover blur-2xl brightness-50"
           priority
         />
@@ -42,6 +45,7 @@ const MediaDetailsPage = async ({ params }: MediaDetailsPageProps) => {
                 src={media.thumbnail}
                 alt={media.title}
                 fill
+                sizes="(max-width: 768px) 0px, (max-width: 1200px) 300px, 350px"
                 className="object-cover"
               />
               <div className="absolute left-3 top-3">
@@ -141,6 +145,39 @@ const MediaDetailsPage = async ({ params }: MediaDetailsPageProps) => {
                       </div>
                   </div>
                </div>
+            </section>
+
+            {/* Reviews Section */}
+            <section className="space-y-8 pt-8 mt-12 border-t">
+              <h2 className="text-3xl font-bold tracking-tight border-l-4 border-primary pl-4 flex items-center gap-3">
+                <Star className="size-8 text-primary" />
+                User Reviews
+              </h2>
+              
+              <div className="flex flex-col-reverse lg:flex-row gap-12 items-start">
+                {/* List of Reviews */}
+                <div className="flex-1 w-full">
+                  <ReviewList mediaId={media.id} />
+                </div>
+                
+                {/* Form or Login Prompt */}
+                <div className="w-full lg:w-[400px] shrink-0 sticky top-24">
+                  {user ? (
+                    <ReviewForm mediaId={media.id} />
+                  ) : (
+                    <div className="rounded-2xl border bg-card/50 p-8 text-center flex flex-col justify-center items-center shadow-sm">
+                      <Star className="size-12 text-muted-foreground/30 mb-4" />
+                      <h3 className="text-xl font-bold mb-2">Write a Review</h3>
+                      <p className="text-sm text-muted-foreground mb-6">You must be logged in to share your thoughts with the community.</p>
+                      <Link href="/login">
+                        <Button className="w-full rounded-full gap-2">
+                          Log In to Review
+                        </Button>
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              </div>
             </section>
           </div>
 

@@ -14,6 +14,7 @@ export const mediaColumns: ColumnDef<IMedia>[] = [
           src={row.original.thumbnail}
           alt={row.original.title}
           fill
+          sizes="64px"
           className="object-cover"
         />
       </div>

@@ -18,6 +18,7 @@ export const salesColumns: ColumnDef<IPayment>[] = [
                      src={media.thumbnail}
                      alt={media.title || "Media"}
                      fill
+                     sizes="48px"
                      className="object-cover"
                    />
                    )}
