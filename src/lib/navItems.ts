@@ -64,14 +64,9 @@ export const adminNavItems: NavSection[] = [
     title: "Content Management",
     items: [
       {
-        title: "Manage Movies",
-        href: "/admin/dashboard/manage-movies",
+        title: "Manage Media",
+        href: "/admin/dashboard/media-management",
         icon: "Film",
-      },
-      {
-        title: "Add New Movie",
-        href: "/admin/dashboard/add-movie",
-        icon: "PlusCircle",
       },
     ],
   },
@@ -93,6 +88,11 @@ export const adminNavItems: NavSection[] = [
   {
     title: "System & Reports",
     items: [
+      {
+        title: "Sales Management",
+        href: "/admin/dashboard/sales-management",
+        icon: "History",
+      },
       {
         title: "Sales/Rental Analytics",
         href: "/admin/dashboard/analytics",

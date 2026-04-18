@@ -35,3 +35,13 @@ export const getMyPayments = async () => {
     throw error;
   }
 };
+
+export const getAllPayments = async () => {
+  try {
+    const res = await httpClient.get<IPayment[]>("/payments/all-payments");
+    return res;
+  } catch (error) {
+    console.error("Error fetching all payments:", error);
+    throw error;
+  }
+};

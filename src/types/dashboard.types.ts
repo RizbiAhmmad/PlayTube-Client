@@ -46,4 +46,9 @@ export interface IPayment {
     thumbnail: string | null;
     streamingUrl: string | null;
   } | null;
+  user?: {
+    id: string;
+    name: string;
+    email: string;
+  } | null;
 }
