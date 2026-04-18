@@ -52,3 +52,29 @@ export interface IPayment {
     email: string;
   } | null;
 }
+
+export interface IAnalyticsTypeDistribution {
+  type: "PURCHASE" | "RENT" | "SUBSCRIPTION";
+  revenue: number | null;
+  count: number;
+}
+
+export interface ISalesOverTime {
+  month: string;
+  revenue: number;
+  count: number;
+}
+
+export interface ITopMedia {
+  title: string;
+  revenue: number;
+  count: number;
+}
+
+export interface IAnalyticsData {
+  totalRevenue: number;
+  totalSales: number;
+  typeDistribution: IAnalyticsTypeDistribution[];
+  salesOverTime: ISalesOverTime[];
+  topMedia: ITopMedia[];
+}
