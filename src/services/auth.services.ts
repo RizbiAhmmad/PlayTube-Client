@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { setTokenInCookies } from "@/lib/tokenUtils";
@@ -45,7 +46,13 @@ export async function getNewTokensWithRefreshToken(
     }
 
     return true;
-  } catch (error) {
+  } catch (error: unknown) {
+    if (
+      error instanceof Error &&
+      (error as any).digest === "DYNAMIC_SERVER_USAGE"
+    ) {
+      throw error;
+    }
     console.error("Error refreshing token:", error);
     return false;
   }
@@ -78,8 +85,21 @@ export async function getUserInfo() {
     const { data } = await res.json();
 
     return data;
-  } catch (error) {
+  } catch (error: unknown) {
+    if (
+      error instanceof Error &&
+      (error as any).digest === "DYNAMIC_SERVER_USAGE"
+    ) {
+      throw error;
+    }
     console.error("Error fetching user info:", error);
     return null;
   }
+}
+
+export async function logoutUser() {
+  const cookieStore = await cookies();
+  cookieStore.delete("accessToken");
+  cookieStore.delete("refreshToken");
+  cookieStore.delete("better-auth.session_token");
 }
