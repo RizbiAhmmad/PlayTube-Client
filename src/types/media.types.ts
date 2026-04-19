@@ -15,6 +15,8 @@ export interface IMedia {
   pricingType: PricingType
   price?: number
   thumbnail: string
+  averageRating?: number
+  reviewCount?: number
   createdAt?: string | Date
   updatedAt?: string | Date
 }
