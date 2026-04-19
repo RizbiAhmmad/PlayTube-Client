@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { toast } from "sonner"
 import { cn } from "@/lib/utils"
+import CommentSection from "./CommentSection"
 
 interface ReviewListProps {
   mediaId: string
@@ -104,6 +105,8 @@ const ReviewCard = ({ review, currentUserId }: { review: IReview, currentUserId?
     handleLikeToggle()
   }
 
+  const [showComments, setShowComments] = useState(false)
+
   return (
     <div className="relative group rounded-3xl border bg-card/50 p-6 shadow-sm transition-all hover:shadow-md hover:border-primary/20">
       <div className="flex flex-col gap-5">
@@ -178,26 +181,38 @@ const ReviewCard = ({ review, currentUserId }: { review: IReview, currentUserId?
 
         {/* Footer Actions */}
         {!isSpoiler && (
-           <div className="flex items-center gap-6 pt-4 border-t border-muted/50">
-              <button 
-                onClick={onLikeClick}
-                disabled={isToggling}
-                className={cn("flex items-center gap-2 transition-colors", 
-                  isLikedByMe ? "text-primary hover:text-primary/80" : "text-muted-foreground hover:text-primary"
-                )}
-              >
-                {isToggling ? <Loader2 className="size-4 animate-spin" /> : <ThumbsUp className={cn("size-4", isLikedByMe && "fill-current")} />}
-                <span className="text-xs font-bold">{isLoadingLikes ? "-" : likes.length}</span>
-              </button>
-              <button className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors cursor-not-allowed opacity-70">
-                <MessageSquare className="size-4" />
-                <span className="text-xs font-bold">{review._count?.comments || 0}</span>
-              </button>
+           <div className="flex flex-col">
+            <div className="flex items-center gap-6 pt-4 border-t border-muted/50">
+                <button 
+                  onClick={onLikeClick}
+                  disabled={isToggling}
+                  className={cn("flex items-center gap-2 transition-colors", 
+                    isLikedByMe ? "text-primary hover:text-primary/80" : "text-muted-foreground hover:text-primary"
+                  )}
+                >
+                  {isToggling ? <Loader2 className="size-4 animate-spin" /> : <ThumbsUp className={cn("size-4", isLikedByMe && "fill-current")} />}
+                  <span className="text-xs font-bold">{isLoadingLikes ? "-" : likes.length}</span>
+                </button>
+                <button 
+                  onClick={() => setShowComments(!showComments)}
+                  className={cn("flex items-center gap-2 transition-colors",
+                    showComments ? "text-primary" : "text-muted-foreground hover:text-primary"
+                  )}
+                >
+                  <MessageSquare className={cn("size-4", showComments && "fill-current")} />
+                  <span className="text-xs font-bold">{review._count?.comments || 0}</span>
+                </button>
+            </div>
+
+            {showComments && (
+              <CommentSection reviewId={review.id} currentUserId={currentUserId} />
+            )}
            </div>
         )}
       </div>
     </div>
   )
 }
+
 
 export default ReviewList
