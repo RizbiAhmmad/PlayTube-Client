@@ -17,7 +17,7 @@ const FeaturedMedia = ({ title, description, mediaList, viewAllLink = "/media" }
   if (!mediaList || mediaList.length === 0) return null;
 
   return (
-    <section className="py-16 bg-background">
+    <section className="py-8 bg-background">
       <div className="container mx-auto px-8">
         {/* Header */}
         <div className="flex items-end justify-between mb-10">

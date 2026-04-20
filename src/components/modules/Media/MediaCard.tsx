@@ -133,7 +133,12 @@ const MediaCard = ({ media, initialIsWatchlisted = false }: MediaCardProps) => {
           <div className="mt-auto flex items-center justify-between border-t border-muted/30 pt-4">
              <div className="flex items-center gap-1.5 text-amber-500">
                 <Star className="size-3.5 fill-current" />
-                <span className="text-xs font-bold leading-none">8.4</span>
+                <span className="text-xs font-bold leading-none">
+                  {media.averageRating?.toFixed(1) || "0.0"}
+                </span>
+                <span className="text-[10px] text-muted-foreground font-medium">
+                  ({media.reviewCount || 0})
+                </span>
              </div>
              
              <div className="text-sm font-black tracking-tight text-foreground/90">

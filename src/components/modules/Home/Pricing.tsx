@@ -1,107 +1,157 @@
 "use client";
 
-import { Check, Zap } from "lucide-react";
+import { Check, Sparkles, Zap, Shield, Crown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const Pricing = () => {
   const plans = [
     {
       name: "Free",
-      price: "$0",
+      icon: <Shield className="size-6 text-blue-400" />,
+      price: "0",
       description: "Perfect for testing our basic features.",
-      features: ["Standard Quality", "Ads Supported", "Limited Library", "1 Device"],
-      buttonText: "Get Started",
+      features: ["Standard Quality (720p)", "Commercial Interruptions", "Large Selection of Movies", "1 Active Screen"],
+      buttonText: "Start for Free",
       highlight: false,
+      color: "blue"
     },
     {
-      name: "Monthly",
-      price: "$12.99",
-      description: "Our most popular plan for ongoing updates.",
-      features: ["Full HD Content", "No Ads", "Unlimited Library", "3 Devices", "Offline Viewing"],
-      buttonText: "Subscribe Now",
+      name: "Standard",
+      icon: <Sparkles className="size-6 text-primary" />,
+      price: "12.99",
+      description: "Our most popular plan for daily entertainment.",
+      features: ["Full HD Quality (1080p)", "Zero Advertisements", "Full Access Library", "3 Simultaneous Screens", "Offline Downloads"],
+      buttonText: "Get Standard",
       highlight: true,
       tag: "Most Popular",
+      color: "primary"
     },
     {
-      name: "Yearly",
-      price: "$119.99",
-      description: "Best value for dedicated movie lovers.",
-      features: ["4K HDR Quality", "No Ads", "Exclusive Content", "Unlimited Library", "5 Devices", "Priority Support"],
-      buttonText: "Get Best Value",
+      name: "Ultimate",
+      icon: <Crown className="size-6 text-amber-400" />,
+      price: "19.99",
+      description: "The ultimate cinematic experience at home.",
+      features: ["Ultra HD 4K + HDR", "Premium Audio Experience", "Exclusive Early Access", "Unlimited Content Access", "6 Simultaneous Screens", "24/7 Priority Support"],
+      buttonText: "Go Ultimate",
       highlight: false,
-      tag: "Best Deal",
+      tag: "Best Value",
+      color: "amber"
     },
   ];
 
   return (
-    <section className="py-24 bg-muted/30">
-      <div className="container mx-auto px-8">
-        <div className="text-center space-y-4 mb-16">
-          <h2 className="text-4xl font-bold tracking-tight md:text-5xl">Choose Your Plan</h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Experience PlayTube your way. From high-octane action to award winning dramas, 
-            unlock a world of entertainment today.
-          </p>
+    <section className="py-32 relative overflow-hidden bg-background" id="pricing">
+      {/* Background Orbs */}
+      <div className="absolute top-1/4 -right-24 size-96 bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -left-24 size-96 bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="container mx-auto px-8 relative z-10">
+        <div className="text-center space-y-6 mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
+              Simple, Transparent <span className="text-primary italic">Pricing.</span>
+            </h2>
+            <p className="mt-6 text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+              No hidden fees, no long-term contracts. Choose the plan that fits your lifestyle 
+              and start your cinematic journey today.
+            </p>
+          </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-          {plans.map((plan) => (
-            <Card 
-              key={plan.name} 
-              className={cn(
-                "relative flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border-2",
-                plan.highlight ? "border-primary shadow-xl scale-105 z-10 bg-card" : "border-border bg-card/50"
-              )}
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+          {plans.map((plan, index) => (
+            <motion.div
+              key={plan.name}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              {plan.tag && (
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                   <Badge className="px-4 py-1 text-xs font-bold uppercase tracking-wider shadow-lg">
+              <div 
+                className={cn(
+                  "group relative h-full flex flex-col p-8 rounded-[2.5rem] border transition-all duration-500",
+                  plan.highlight 
+                    ? "bg-primary/[0.03] border-primary shadow-2xl shadow-primary/10 scale-105 lg:scale-110 z-10" 
+                    : "bg-card border-border hover:border-primary/50"
+                )}
+              >
+                {plan.tag && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                    <span className={cn(
+                      "px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest shadow-xl",
+                      plan.highlight ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground border border-border"
+                    )}>
                       {plan.tag}
-                   </Badge>
-                </div>
-              )}
-              
-              <CardHeader className="text-center pt-8">
-                <CardTitle className="text-2xl font-bold">{plan.name}</CardTitle>
-                <div className="mt-4 flex items-baseline justify-center gap-1">
-                  <span className="text-5xl font-extrabold tracking-tight">{plan.price}</span>
-                  {plan.price !== "Free" && <span className="text-muted-foreground text-sm font-medium">/{plan.name === "Yearly" ? "year" : "mo"}</span>}
-                </div>
-                <p className="text-muted-foreground mt-4 text-sm font-medium">{plan.description}</p>
-              </CardHeader>
+                    </span>
+                  </div>
+                )}
 
-              <CardContent className="flex-1 space-y-6 pt-6">
-                <div className="space-y-4">
+                <div className="mb-8 flex items-center justify-between">
+                  <div className={cn(
+                    "p-3 rounded-2xl",
+                    plan.highlight ? "bg-primary/10" : "bg-muted"
+                  )}>
+                    {plan.icon}
+                  </div>
+                  <h3 className="text-2xl font-bold">{plan.name}</h3>
+                </div>
+
+                <div className="mb-8">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-sm font-bold text-muted-foreground opacity-70">$</span>
+                    <span className="text-5xl font-black tracking-tight">{plan.price}</span>
+                    <span className="text-muted-foreground text-sm font-medium">/mo</span>
+                  </div>
+                  <p className="text-muted-foreground mt-4 text-sm leading-relaxed min-h-[40px]">
+                    {plan.description}
+                  </p>
+                </div>
+
+                <div className="space-y-4 mb-10 flex-1">
                   {plan.features.map((feature) => (
-                    <div key={feature} className="flex items-center gap-3">
+                    <div key={feature} className="flex items-start gap-3 group/item">
                       <div className={cn(
-                        "flex size-5 items-center justify-center rounded-full shrink-0",
-                        plan.highlight ? "bg-primary text-white" : "bg-muted text-muted-foreground"
+                        "mt-1 flex size-5 items-center justify-center rounded-full shrink-0 transition-colors",
+                        plan.highlight ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground group-hover/item:bg-primary/10 group-hover/item:text-primary"
                       )}>
-                        <Check className="size-3.5 stroke-[3px]" />
+                        <Check className="size-3.5 stroke-[3.5px]" />
                       </div>
-                      <span className="text-sm font-semibold">{feature}</span>
+                      <span className="text-sm font-bold text-foreground/80 group-hover/item:text-foreground transition-colors">
+                        {feature}
+                      </span>
                     </div>
                   ))}
                 </div>
-              </CardContent>
 
-              <CardFooter className="pb-8">
                 <Button 
                   className={cn(
-                    "w-full h-12 font-bold text-lg rounded-xl transition-all active:scale-95",
-                    plan.highlight ? "bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20" : "bg-secondary hover:bg-secondary/80 text-secondary-foreground"
+                    "w-full h-14 font-extrabold text-lg rounded-2xl transition-all duration-300 active:scale-[0.98]",
+                    plan.highlight 
+                      ? "bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/25" 
+                      : "bg-secondary hover:bg-secondary/80 text-secondary-foreground border border-border"
                   )}
                 >
-                  <Zap className={cn("mr-2 size-4 fill-current", plan.highlight ? "text-amber-400" : "text-muted-foreground")} />
+                  <Zap className={cn("mr-2 size-5 fill-current", plan.highlight ? "text-amber-400" : "text-primary")} />
                   {plan.buttonText}
                 </Button>
-              </CardFooter>
-            </Card>
+
+              </div>
+            </motion.div>
           ))}
+        </div>
+
+        <div className="mt-20 text-center">
+            <p className="text-muted-foreground text-sm font-medium flex items-center justify-center gap-2">
+                <Shield className="size-4 text-primary" />
+                All plans include a 7-day money-back guarantee. No questions asked.
+            </p>
         </div>
       </div>
     </section>
@@ -109,3 +159,4 @@ const Pricing = () => {
 };
 
 export default Pricing;
+
