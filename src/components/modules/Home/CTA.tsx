@@ -1,85 +1,102 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { PlayCircle, ArrowRight, Star } from "lucide-react";
+import { PlayCircle, ArrowRight, Zap } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
 const CTA = () => {
   return (
     <section className="py-24 relative overflow-hidden bg-background">
-      <div className="container relative z-10 mx-auto px-8">
+      {/* Dynamic Background elements for light/dark themes */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute top-1/4 left-1/4 size-[400px] bg-primary/10 rounded-full blur-[100px]" />
+        <div className="absolute bottom-1/4 right-1/4 size-[400px] bg-primary/20 rounded-full blur-[120px]" />
+      </div>
+
+      <div className="container relative z-10 mx-auto px-6 md:px-12">
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="relative bg-zinc-900 rounded-[3rem] p-12 md:p-24 overflow-hidden border border-white/5"
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="relative bg-card/40 backdrop-blur-3xl rounded-[3rem] p-10 md:p-20 overflow-hidden border shadow-2xl"
         >
-          {/* Enhanced Background Effects */}
-          <div className="absolute inset-0 z-0">
-            <div className="absolute top-0 right-0 size-[500px] bg-primary/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
-            <div className="absolute bottom-0 left-0 size-[500px] bg-blue-500/10 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2" />
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20" />
-          </div>
+          {/* Subtle overlay gradient */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none" />
 
-          <div className="relative z-10 flex flex-col items-center text-center">
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="mb-8 p-4 bg-primary/10 rounded-3xl border border-primary/20 backdrop-blur-md"
-            >
-              <PlayCircle className="size-16 text-primary animate-pulse" />
-            </motion.div>
+          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
+            <div className="flex-1 space-y-8 text-center md:text-left">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm"
+              >
+                <Zap className="size-4 animate-pulse" />
+                <span>Start Streaming Today</span>
+              </motion.div>
 
-            <div className="space-y-6 max-w-4xl">
-              <h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter leading-none">
-                UNLEASH THE{" "}
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-400 italic">
-                  MAGIC
-                </span>{" "}
-                OF CINEMA.
+              <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-tight">
+                Ready to Experience <br />
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">
+                  Cinematic Brilliance?
+                </span>
               </h2>
-              <p className="text-zinc-400 text-lg md:text-2xl font-medium max-w-2xl mx-auto leading-relaxed">
-                Join our premium community today and experience storytelling
-                like never before. Exclusive content, anywhere, anytime.
+
+              <p className="text-muted-foreground text-lg md:text-xl font-medium max-w-xl mx-auto md:mx-0 leading-relaxed">
+                Join our community of movie lovers. Get access to thousands of
+                movies, series, and exclusive content instantly.
               </p>
-            </div>
 
-            <div className="flex flex-col sm:flex-row gap-6 pt-12 w-full sm:w-auto">
-              <Button
-                asChild
-                size="lg"
-                className="h-16 px-12 rounded-2xl font-black text-xl shadow-2xl shadow-primary/30 transition-all hover:scale-105 active:scale-95 bg-primary hover:bg-primary/90 text-primary-foreground"
-              >
-                <Link href="/register">
-                  Join PlayTube Now
-                  <ArrowRight className="ml-2 size-6" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="h-16 px-12 rounded-2xl font-bold text-xl backdrop-blur-xl border-white/20 text-white hover:bg-white/10 transition-all hover:scale-105 active:scale-95 bg-transparent"
-              >
-                <Link href="/media">Browse Gallery</Link>
-              </Button>
-            </div>
-
-            <div className="mt-12 flex items-center gap-6 text-zinc-500 font-bold uppercase tracking-widest text-xs">
-              <div className="flex items-center gap-2">
-                <Star className="size-4 text-amber-500 fill-amber-500" />
-                9.5/10 Rating
-              </div>
-              <div className="hidden sm:block w-px h-4 bg-zinc-800" />
-              <div className="flex items-center gap-2">
-                <Star className="size-4 text-primary fill-primary" />
-                1M+ Community
+              <div className="flex flex-col sm:flex-row gap-4 pt-4 w-full justify-center md:justify-start">
+                <Button
+                  asChild
+                  size="lg"
+                  className="h-14 px-8 rounded-full font-bold text-lg shadow-lg hover:shadow-primary/25 transition-all hover:-translate-y-1"
+                >
+                  <Link href="/register">
+                    Create Free Account
+                    <ArrowRight className="ml-2 size-5" />
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                  className="h-14 px-8 rounded-full font-bold text-lg bg-background/50 backdrop-blur-sm border-2 transition-all hover:bg-accent hover:-translate-y-1"
+                >
+                  <Link href="/media">
+                    <PlayCircle className="mr-2 size-5" />
+                    Explore Library
+                  </Link>
+                </Button>
               </div>
             </div>
+
+            {/* Right side artistic element */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+              className="hidden lg:flex flex-1 justify-center relative"
+            >
+              <div className="relative w-80 h-96">
+                <div className="absolute inset-0 bg-primary/30 rounded-[3rem] rotate-6 transform transition-transform hover:rotate-12 duration-500" />
+                <div className="absolute inset-0 rounded-[3rem] -rotate-3 border shadow-xl overflow-hidden transform transition-transform hover:-rotate-6 duration-500 flex items-center justify-center p-8 text-center flex-col gap-4 group">
+                  <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-700 group-hover:scale-110" />
+                  <div className="absolute inset-0 bg-black/50 group-hover:bg-black/60 transition-colors duration-500" />
+                  <PlayCircle className="size-20 text-primary opacity-90 relative z-10" />
+                  <p className="text-2xl font-bold text-white relative z-10 drop-shadow-lg">
+                    Unlimited
+                    <br />
+                    Entertainment
+                  </p>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </motion.div>
       </div>
