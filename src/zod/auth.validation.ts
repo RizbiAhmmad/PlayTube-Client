@@ -24,3 +24,10 @@ export const registerZodSchema = z.object({
 });
 
 export type IRegisterPayload = z.infer<typeof registerZodSchema>;
+
+export const verifyEmailZodSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  otp: z.string().min(1, "OTP is required"),
+});
+
+export type IVerifyEmailPayload = z.infer<typeof verifyEmailZodSchema>;
