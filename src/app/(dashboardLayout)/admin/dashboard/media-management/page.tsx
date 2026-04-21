@@ -1,56 +1,39 @@
-import MediaTable from "@/components/modules/Admin/MediaManagement/MediaTable"
-import { getMediaList } from "@/services/media.services"
-import { HydrationBoundary, QueryClient, dehydrate } from "@tanstack/react-query"
+import MediaTable from "@/components/modules/Admin/MediaManagement/MediaTable";
+import { Metadata } from "next";
 
-const MediaManagementPage = async ({
+export const metadata: Metadata = {
+  title: "Media Management | Admin Dashboard",
+  description: "Upload and manage media for your platform",
+};
+
+export default async function MediaManagementPage({
   searchParams,
 }: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}) => {
-  const queryParamsObjects = await searchParams
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const queryParams = await searchParams;
+  // Convert all values to strings
+  const stringParams: Record<string, string> = {};
+  for (const key in queryParams) {
+    const value = queryParams[key];
+    if (Array.isArray(value)) {
+      stringParams[key] = value[0];
+    } else if (value !== undefined) {
+      stringParams[key] = value as string;
+    }
+  }
 
-  const queryString = Object.keys(queryParamsObjects)
-    .map((key) => {
-      const value = queryParamsObjects[key]
-
-      if (value === undefined) {
-        return ""
-      }
-
-      if (Array.isArray(value)) {
-        return value
-          .map((item) => `${encodeURIComponent(key)}=${encodeURIComponent(item)}`)
-          .join("&")
-      }
-
-      return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
-    })
-    .filter(Boolean)
-    .join("&")
-
-  const queryClient = new QueryClient()
-
-  await queryClient.prefetchQuery({
-    queryKey: ["media", queryString],
-    queryFn: () => getMediaList(queryString),
-  })
+  const initialQueryString = new URLSearchParams(stringParams).toString();
 
   return (
-    <div className="flex flex-col gap-6 p-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">Media Management</h1>
-          <p className="text-muted-foreground">
-            Upload and manage images for your platform.
-          </p>
-        </div>
+    <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
+      <div className="flex items-center justify-between space-y-2">
+        <h2 className="text-3xl font-bold tracking-tight">Media Management</h2>
       </div>
 
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <MediaTable initialQueryString={queryString} />
-      </HydrationBoundary>
+      <div className="h-full flex-1 flex-col space-y-8 md:flex">
+        <MediaTable initialQueryString={initialQueryString} />
+      </div>
     </div>
-  )
+  );
 }
-
-export default MediaManagementPage

@@ -1,4 +1,6 @@
+import UserTable from "@/components/modules/Admin/UserManagement/UserTable";
 import { Users } from "lucide-react";
+
 
 export const metadata = {
   title: "User Management | Admin Dashboard",

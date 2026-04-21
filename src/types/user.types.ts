@@ -11,3 +11,11 @@ export interface IUser {
   emailVerified: boolean
   createdAt: string
 }
+
+// Lightweight user info used for display in sidebars / navbars
+export interface UserInfo {
+  name: string
+  email: string
+  role: UserRole
+  image?: string
+}

@@ -36,7 +36,7 @@ export const userColumns: ColumnDef<IUser>[] = [
         <div className="flex items-center gap-3">
           <div className="relative h-10 w-10 overflow-hidden rounded-full border bg-muted">
             {user.image ? (
-              <Image src={user.image} alt={user.name} fill className="object-cover" />
+              <Image src={user.image} alt={user.name} fill sizes="40px" className="object-cover" />
             ) : (
               <div className="flex h-full w-full items-center justify-center font-bold text-muted-foreground uppercase">
                 {user.name.charAt(0)}

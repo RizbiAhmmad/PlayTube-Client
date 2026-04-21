@@ -7,6 +7,7 @@ import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
 import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";
+import { memo, useMemo, useCallback } from "react";
 import {
   Bold,
   Italic,
@@ -65,12 +66,9 @@ const ToolbarButton = ({
   </Button>
 );
 
-const MenuBar = ({ editor }: { editor: any }) => {
-  if (!editor) {
-    return null;
-  }
-
-  const setLink = () => {
+const MenuBar = memo(({ editor }: { editor: any }) => {
+  const setLink = useCallback(() => {
+    if (!editor) return;
     const url = window.prompt("Enter URL");
     if (url === null) return;
     if (url === "") {
@@ -78,7 +76,11 @@ const MenuBar = ({ editor }: { editor: any }) => {
       return;
     }
     editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
-  };
+  }, [editor]);
+
+  if (!editor) {
+    return null;
+  }
 
   return (
     <div className="flex flex-wrap items-center gap-1 border-b bg-muted/50 p-1">
@@ -218,30 +220,37 @@ const MenuBar = ({ editor }: { editor: any }) => {
       </ToolbarButton>
     </div>
   );
-};
+});
+MenuBar.displayName = "MenuBar";
 
-const AppRichTextEditor = ({ value, onChange }: AppRichTextEditorProps) => {
+const AppRichTextEditor = memo(({ value, onChange }: AppRichTextEditorProps) => {
+  const extensions = useMemo(() => [
+    StarterKit.configure({
+      bulletList: {
+        keepMarks: true,
+        keepAttributes: false,
+      },
+      orderedList: {
+        keepMarks: true,
+        keepAttributes: false,
+      },
+    }),
+    Underline,
+    Link.configure({
+      openOnClick: false,
+    }),
+    TextAlign.configure({
+      types: ["heading", "paragraph"],
+    }),
+    Highlight,
+  ], []);
+
+  const handleUpdate = useCallback(({ editor }: any) => {
+    onChange(editor.getHTML());
+  }, [onChange]);
+
   const editor = useEditor({
-    extensions: [
-      StarterKit.configure({
-        bulletList: {
-          keepMarks: true,
-          keepAttributes: false,
-        },
-        orderedList: {
-          keepMarks: true,
-          keepAttributes: false,
-        },
-      }),
-      Underline,
-      Link.configure({
-        openOnClick: false,
-      }),
-      TextAlign.configure({
-        types: ["heading", "paragraph"],
-      }),
-      Highlight,
-    ],
+    extensions,
     content: value,
     editorProps: {
       attributes: {
@@ -249,9 +258,7 @@ const AppRichTextEditor = ({ value, onChange }: AppRichTextEditorProps) => {
           "prose prose-sm dark:prose-invert max-w-none focus:outline-none min-h-[120px] p-3",
       },
     },
-    onUpdate: ({ editor }) => {
-      onChange(editor.getHTML());
-    },
+    onUpdate: handleUpdate,
     immediatelyRender: false,
   });
 
@@ -261,6 +268,7 @@ const AppRichTextEditor = ({ value, onChange }: AppRichTextEditorProps) => {
       <EditorContent editor={editor} />
     </div>
   );
-};
+});
+AppRichTextEditor.displayName = "AppRichTextEditor";
 
 export default AppRichTextEditor;
