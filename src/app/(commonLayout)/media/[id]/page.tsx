@@ -138,9 +138,10 @@ const MediaDetailsPage = async ({ params }: MediaDetailsPageProps) => {
               <h2 className="text-3xl font-bold tracking-tight border-l-4 border-primary pl-4">
                 Synopsis
               </h2>
-              <p className="text-lg leading-relaxed text-muted-foreground/90">
-                {media.description}
-              </p>
+              <div 
+                className="text-lg leading-relaxed text-muted-foreground/90 prose dark:prose-invert max-w-none"
+                dangerouslySetInnerHTML={{ __html: media.description }}
+              />
             </section>
 
             <section className="space-y-6">

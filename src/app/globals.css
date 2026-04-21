@@ -128,3 +128,20 @@
     @apply font-sans;
   }
 }
+/* Tiptap Rich Text Editor Styling */
+.ProseMirror { @apply min-h-[120px] outline-none; }
+.ProseMirror p.is-editor-empty:first-child::before { content: attr(data-placeholder); float: left; @apply pointer-events-none h-0 text-muted-foreground; }
+.ProseMirror ul { @apply list-disc pl-6 space-y-1 my-2; }
+.ProseMirror ol { @apply list-decimal pl-6 space-y-1 my-2; }
+.ProseMirror blockquote { @apply border-l-4 border-muted pl-4 italic my-4; }
+.ProseMirror h1 { @apply text-2xl font-bold mb-2 mt-4; }
+.ProseMirror h2 { @apply text-xl font-bold mb-2 mt-3; }
+.ProseMirror code { @apply bg-muted px-1.5 py-0.5 rounded text-sm font-mono; }
+
+.ProseMirror a { @apply text-primary underline underline-offset-4 cursor-pointer hover:text-primary/80; }
+.ProseMirror mark { @apply bg-yellow-200 dark:bg-yellow-800 rounded-sm px-0.5; }
+.ProseMirror [style*='text-align: center'] { text-align: center; }
+.ProseMirror [style*='text-align: right'] { text-align: right; }
+.ProseMirror [style*='text-align: justify'] { text-align: justify; }
+.ProseMirror hr { @apply border-t border-muted my-6; }
+.ProseMirror h3 { @apply text-lg font-bold mb-1 mt-3; }

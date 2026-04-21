@@ -50,7 +50,7 @@ const ViewMediaDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90vh] w-[calc(100vw-1.5rem)] max-w-4xl gap-0 overflow-hidden p-0">
+      <DialogContent className="max-h-[90vh] w-[calc(100vw-1.5rem)] max-w-5xl gap-0 overflow-hidden p-0">
         <DialogHeader className="border-b px-6 py-5 pr-14">
           <DialogTitle>Media Details</DialogTitle>
           <DialogDescription>
@@ -106,7 +106,10 @@ const ViewMediaDialog = ({
 
                   <div className="space-y-2">
                     <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Description</h3>
-                    <p className="text-sm leading-relaxed text-foreground/80">{mediaDetails.description}</p>
+                    <div 
+                      className="text-sm leading-relaxed text-foreground/80 prose prose-sm dark:prose-invert max-w-none"
+                      dangerouslySetInnerHTML={{ __html: mediaDetails.description }}
+                    />
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">

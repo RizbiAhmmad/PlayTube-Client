@@ -2,6 +2,7 @@
 
 import { updateMediaAction } from "@/app/(dashboardLayout)/admin/dashboard/media-management/_action"
 import AppField from "@/components/shared/form/AppField"
+import AppRichTextEditor from "@/components/shared/form/AppRichTextEditor"
 import AppSubmitButton from "@/components/shared/form/AppSubmitButton"
 import { Button } from "@/components/ui/button"
 import {
@@ -17,7 +18,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
 import {
   type IUpdateMediaFormValues,
 } from "@/zod/media.validation"
@@ -129,7 +129,7 @@ const EditMediaFormModal = ({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className="max-h-[95vh] w-[calc(100vw-1.5rem)] max-w-4xl gap-0 overflow-hidden p-0"
+        className="max-h-[95vh] w-[calc(100vw-1.5rem)] max-w-5xl gap-0 overflow-hidden p-0"
         onInteractOutside={(event) => event.preventDefault()}
         onEscapeKeyDown={(event) => event.preventDefault()}
       >
@@ -156,14 +156,13 @@ const EditMediaFormModal = ({
                     {(field) => <AppField field={field} label="Title" />}
                   </form.Field>
 
-                  <form.Field name="description">
+                   <form.Field name="description">
                     {(field) => (
-                      <div className="space-y-1.5">
+                      <div className="space-y-1.5 px-0.5">
                         <Label>Description</Label>
-                        <Textarea
-                          value={field.state.value}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          className="h-24 resize-none"
+                        <AppRichTextEditor
+                          value={field.state.value || ""}
+                          onChange={(value) => field.handleChange(value)}
                         />
                       </div>
                     )}
