@@ -32,6 +32,11 @@ export async function proxy(request: NextRequest) {
     const accessToken = request.cookies.get("accessToken")?.value;
     const refreshToken = request.cookies.get("refreshToken")?.value;
 
+    // Check for session token in cookies
+    const sessionToken =
+      request.cookies.get("better-auth.session_token") ||
+      request.cookies.get("__Secure-better-auth.session_data");
+
     const decodedAccessToken =
       accessToken &&
       jwtUtils.verifyToken(accessToken, process.env.JWT_ACCESS_SECRET as string)
@@ -142,7 +147,7 @@ export async function proxy(request: NextRequest) {
     }
 
     // Rule - 4 User is Not logged in but trying to access protected route -> redirect to login
-    if (!accessToken || !isValidAccessToken) {
+    if (!accessToken || !isValidAccessToken || !sessionToken) {
       const loginUrl = new URL("/login", request.url);
       loginUrl.searchParams.set("redirect", pathWithQuery);
       return NextResponse.redirect(loginUrl);

@@ -71,13 +71,13 @@ const MediaCard = ({ media }: { media: IMedia }) => {
           </div>
         </div>
 
-        <div className="flex items-center gap-2 overflow-hidden">
+        {/* <div className="flex items-center gap-2 overflow-hidden">
           {media.type && (
             <span className="text-[10px] bg-muted px-2 py-0.5 rounded-full border truncate max-w-full font-bold">
               {media.genres?.[0] || "Action"}
             </span>
           )}
-        </div>
+        </div> */}
       </div>
     </Link>
   );

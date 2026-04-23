@@ -332,18 +332,20 @@ const CreateMediaFormModal = () => {
                       )}
                     </form.Field>
 
-                    <form.Field name="price">
-                      {(field) => (
-                        <AppField
-                          field={field}
-                          label="Price"
-                          type="number"
-                          disabled={
-                            form.getFieldValue("pricingType") === "FREE"
-                          }
-                        />
+                    <form.Subscribe selector={(state) => state.values.pricingType}>
+                      {(pricingType) => (
+                        <form.Field name="price">
+                          {(field) => (
+                            <AppField
+                              field={field}
+                              label="Price"
+                              type="number"
+                              disabled={pricingType === "FREE"}
+                            />
+                          )}
+                        </form.Field>
                       )}
-                    </form.Field>
+                    </form.Subscribe>
                   </div>
                 </div>
               </div>

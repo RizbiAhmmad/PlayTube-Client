@@ -17,9 +17,11 @@ export const getMyWatchlist = async () => {
   try {
     const res = await httpClient.get<any[]>("/watchlist/my-watchlist");
     return res;
-  } catch (error) {
-    console.error("Error fetching watchlist:", error);
-    throw error;
+  } catch (error: any) {
+    if (error?.response?.status !== 401) {
+      console.error("Error fetching watchlist:", error);
+    }
+    return { data: [] };
   }
 };
 

@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -8,14 +10,24 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { UserInfo } from "@/types/user.types";
-import { Key, LogOut, User } from "lucide-react";
+import { LogOut, User } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { logoutUser } from "@/services/auth.services";
 
 interface UserDropdownProps {
   userInfo: UserInfo;
 }
 
 const UserDropdown = ({ userInfo }: UserDropdownProps) => {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await logoutUser();
+    router.push("/login");
+    router.refresh();
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -43,25 +55,25 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem>
-          <Link href={"/dashboard/my-profile"}>
+        <DropdownMenuItem asChild>
+          <Link href={"/dashboard/my-profile"} className="w-full flex items-center cursor-pointer">
             <User className="mr-2 h-4 w-4" />
             My Profile
           </Link>
         </DropdownMenuItem>
 
-        <DropdownMenuItem>
-          <Link href={"/dashboard/change-password"}>
+        {/* <DropdownMenuItem asChild>
+          <Link href={"/dashboard/change-password"} className="w-full flex items-center cursor-pointer">
             <Key className="mr-2 h-4 w-4" />
             Change Password
           </Link>
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
 
         <DropdownMenuSeparator />
 
         <DropdownMenuItem
-          onClick={() => {}}
-          className="cursor-pointer text-red-600"
+          onClick={handleLogout}
+          className="cursor-pointer text-red-600 w-full flex items-center"
         >
           <LogOut className="mr-2 h-4 w-4" />
           Logout

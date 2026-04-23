@@ -4,7 +4,8 @@
 import { setTokenInCookies } from "@/lib/tokenUtils";
 import { cookies } from "next/headers";
 
-const BASE_API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const BASE_API_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000/api/V1";
 
 if (!BASE_API_URL) {
   throw new Error("NEXT_PUBLIC_API_BASE_URL is not defined");
@@ -99,6 +100,22 @@ export async function getUserInfo() {
 
 export async function logoutUser() {
   const cookieStore = await cookies();
+  const sessionToken = cookieStore.get("better-auth.session_token")?.value;
+
+  if (sessionToken) {
+    try {
+      await fetch(`${BASE_API_URL}/auth/logout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: `better-auth.session_token=${sessionToken}`,
+        },
+      });
+    } catch (error) {
+      console.error("Error logging out from server:", error);
+    }
+  }
+
   cookieStore.delete("accessToken");
   cookieStore.delete("refreshToken");
   cookieStore.delete("better-auth.session_token");

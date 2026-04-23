@@ -50,11 +50,11 @@ export const userNavItems: NavSection[] = [
         href: "/dashboard/my-profile",
         icon: "User",
       },
-      {
-        title: "Change Password",
-        href: "/change-password",
-        icon: "Settings",
-      },
+      // {
+      //   title: "Change Password",
+      //   href: "/change-password",
+      //   icon: "Settings",
+      // },
     ],
   },
 ];
