@@ -1,26 +1,26 @@
-"use client"
+"use client";
 
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Separator } from "@/components/ui/separator"
-import { getIconComponent } from "@/lib/iconMapper"
-import { cn } from "@/lib/utils"
-import { NavSection } from "@/types/dashboard.types"
-import { UserInfo } from "@/types/user.types"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { getIconComponent } from "@/lib/iconMapper";
+import { cn } from "@/lib/utils";
+import { NavSection } from "@/types/dashboard.types";
+import { UserInfo } from "@/types/user.types";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface DashboardSidebarContentProps {
-    userInfo : UserInfo,
-    navItems : NavSection[],
-    dashboardHome : string,
-
+  userInfo: UserInfo;
+  navItems: NavSection[];
+  dashboardHome: string;
 }
 
-
-
-const DashboardSidebarContent = ({dashboardHome, navItems, userInfo} : DashboardSidebarContentProps) => {
-    const pathname = usePathname()
+const DashboardSidebarContent = ({
+  dashboardHome,
+  navItems,
+  userInfo,
+}: DashboardSidebarContentProps) => {
+  const pathname = usePathname();
   return (
     <div className="hidden md:flex h-full w-64 flex-col border-r bg-card overflow-y-auto">
       {/* Logo / Brand */}
@@ -83,7 +83,9 @@ const DashboardSidebarContent = ({dashboardHome, navItems, userInfo} : Dashboard
           </div>
 
           <div className="flex-1 overflow-hidden">
-            <p className="text-sm font-medium truncate">{userInfo?.name || "User"}</p>
+            <p className="text-sm font-medium truncate">
+              {userInfo?.name || "User"}
+            </p>
             <p className="text-xs text-muted-foreground capitalize">
               {userInfo?.role?.toLocaleLowerCase().replace("_", " ") || "Guest"}
             </p>
@@ -92,6 +94,6 @@ const DashboardSidebarContent = ({dashboardHome, navItems, userInfo} : Dashboard
       </div>
     </div>
   );
-}
+};
 
-export default DashboardSidebarContent
+export default DashboardSidebarContent;

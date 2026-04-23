@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎥 PlayTube - Premium Video Sharing Experience
 
-## Getting Started
+![PlayTube Banner](https://images.unsplash.com/photo-1542204165-65bf26472b9b?q=80&w=1200&auto=format&fit=crop)
 
-First, run the development server:
+PlayTube is a modern, high-performance video sharing platform built with the latest technologies. This repository contains the **Frontend** source code, providing a seamless and interactive user experience.
+
+---
+
+## 🚀 Live Links & Repository
+
+- **🌐 Live Demo:** [https://playtube-client.vercel.app/](https://playtube-client.vercel.app/)
+- **🔗 GitHub Frontend Repo:** [https://github.com/RizbiAhmmad/PlayTube-Client](https://github.com/RizbiAhmmad/PlayTube-Client)
+- **🔗 GitHub Backend Repo:** [https://github.com/RizbiAhmmad/PlayTube-Server](https://github.com/RizbiAhmmad/PlayTube-Server)
+
+---
+
+## 🔐 Demo Credentials
+
+To explore the full potential of the platform, including the admin features, use the following credentials:
+
+| Role            | Email                  | Password      |
+| :-------------- | :--------------------- | :------------ |
+| **Super Admin** | `superadmin@gmail.com` | `password123` |
+
+---
+
+## ✨ Key Features
+
+- **📺 Immersive Video Player:** Smooth playback with a modern interface.
+- **🔐 Robust Authentication:** Secure login, signup, and email verification using **Better Auth**.
+- **🛠️ Admin Dashboard:** Comprehensive management of users, videos, and platform analytics.
+- **🎨 Modern UI/UX:** Built with **Tailwind CSS 4** and **Shadcn UI** for a premium feel.
+- **⚡ High Performance:** Optimized with **Next.js 15+** and **React 19**.
+- **💳 Premium Subscriptions:** Integrated with **Stripe** for seamless payments.
+- **📱 Fully Responsive:** Beautiful experience across all devices.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework:** [Next.js 16+](https://nextjs.org/) (App Router)
+- **Library:** [React 19](https://react.dev/)
+- **Styling:** [Tailwind CSS 4](https://tailwindcss.com/)
+- **UI Components:** [Shadcn UI](https://ui.shadcn.com/)
+- **State Management:** [TanStack Query v5](https://tanstack.com/query)
+- **Animations:** [Framer Motion](https://www.framer.com/motion/)
+- **Form Handling:** [TanStack Form](https://tanstack.com/form) & [Zod](https://zod.dev/)
+
+---
+
+## 🛠️ Installation & Setup
+
+Follow these steps to run the project locally:
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/RizbiAhmmad/PlayTube-Client.git
+cd PlayTube-Client
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Environment Configuration
+
+Create a `.env.local` file in the root directory
+
+### 4. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📁 Project Structure
 
-## Learn More
+```text
+src/
+├── app/            # Next.js App Router (Pages & Layouts)
+├── components/     # Reusable UI components (Shared & Modules)
+├── hooks/          # Custom React hooks
+├── services/       # API call services using Axios/TanStack Query
+├── lib/            # Utility functions and configurations
+├── types/          # TypeScript interfaces and types
+└── styles/         # Global CSS and Tailwind configurations
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📄 License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Distributed under the MIT License. See `LICENSE` for more information.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<p align="center">
+  Developed with ❤️ by <a href="https://github.com/RizbiAhmmad">Rizbi Ahmmad</a>
+</p>
