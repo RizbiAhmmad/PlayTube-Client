@@ -151,11 +151,15 @@ const LoginForm = ({ redirectPath }: LoginFormProps) => {
           </div>
         </div>
 
-        <Button variant="outline" className="w-full" onClick={() => {
+        <Button
+          variant="outline"
+          className="w-full"
+          onClick={() => {
             const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
             //TODO redirect path after login in frontend
             window.location.href = `${baseUrl}/auth/login/google`;
-        }}>
+          }}
+        >
           <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
             <path
               fill="currentColor"
@@ -176,7 +180,38 @@ const LoginForm = ({ redirectPath }: LoginFormProps) => {
           </svg>
           Sign in with Google
         </Button>
+
+        <div className="mt-6 pt-6 border-t border-dashed space-y-3">
+          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider text-center">
+            Demo Credentials
+          </p>
+          <div className="flex gap-3">
+            <Button
+              type="button"
+              variant="secondary"
+              className="flex-1 text-xs h-9 bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200"
+              onClick={() => {
+                form.setFieldValue("email", "superadmin@gmail.com");
+                form.setFieldValue("password", "password123");
+              }}
+            >
+              Login as Admin
+            </Button>
+            <Button
+              type="button"
+              variant="secondary"
+              className="flex-1 text-xs h-9 bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200"
+              onClick={() => {
+                form.setFieldValue("email", "user@gmail.com");
+                form.setFieldValue("password", "password123");
+              }}
+            >
+              Login as User
+            </Button>
+          </div>
+        </div>
       </CardContent>
+
 
       <CardFooter className="justify-center border-t pt-4">
         <p className="text-sm text-muted-foreground">
