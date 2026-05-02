@@ -6,6 +6,8 @@ import { Toaster } from "@/components/ui/sonner";
 
 import FloatingChatbot from "@/components/modules/Chatbot/FloatingChatbot";
 
+import { ThemeProvider } from "@/providers/ThemeProvider";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -29,16 +31,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <QueryProviders>
-          {children}
-          <FloatingChatbot />
-          <Toaster richColors position="top-right" />
-        </QueryProviders>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <QueryProviders>
+            {children}
+            <FloatingChatbot />
+            <Toaster richColors position="top-right" />
+          </QueryProviders>
+        </ThemeProvider>
       </body>
     </html>
   );
 }
+

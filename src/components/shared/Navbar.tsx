@@ -39,6 +39,8 @@ import { cn } from "@/lib/utils";
 import { UserInfo } from "@/types/user.types";
 import { getDefaultDashboardRoute } from "@/lib/authUtils";
 
+import { ThemeToggle } from "./ThemeToggle";
+
 interface MenuItem {
   title: string;
   url: string;
@@ -111,7 +113,8 @@ const Navbar = ({ userInfo, className }: NavbarProps) => {
           </div>
 
           {/* Right: Auth/Profile */}
-          <div className="flex w-[200px] justify-end gap-4">
+          <div className="flex w-[200px] justify-end gap-4 items-center">
+            <ThemeToggle />
             {userInfo ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -164,7 +167,10 @@ const Navbar = ({ userInfo, className }: NavbarProps) => {
             <PlayCircle className="size-8 text-primary" />
             <span className="text-xl font-bold tracking-tight">PlayTube</span>
           </Link>
-          <Sheet>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Sheet>
+
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
                 <Menu className="size-6" />
@@ -222,7 +228,8 @@ const Navbar = ({ userInfo, className }: NavbarProps) => {
                 </div>
               </div>
             </SheetContent>
-          </Sheet>
+            </Sheet>
+          </div>
         </div>
       </div>
     </section>
