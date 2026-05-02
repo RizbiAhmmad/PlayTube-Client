@@ -4,6 +4,8 @@ import "./globals.css";
 import QueryProviders from "@/providers/Queryprovider";
 import { Toaster } from "@/components/ui/sonner";
 
+import FloatingChatbot from "@/components/modules/Chatbot/FloatingChatbot";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -31,9 +33,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-       <QueryProviders>{children}
-        <Toaster richColors></Toaster>
-       </QueryProviders>
+        <QueryProviders>
+          {children}
+          <FloatingChatbot />
+          <Toaster richColors position="top-right" />
+        </QueryProviders>
       </body>
     </html>
   );

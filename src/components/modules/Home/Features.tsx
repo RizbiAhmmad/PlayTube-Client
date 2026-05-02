@@ -6,29 +6,33 @@ import { Tv, Download, Users, Monitor } from "lucide-react";
 const features = [
   {
     title: "Enjoy on your TV",
-    description: "Watch on Smart TVs, Playstation, Xbox, Apple TV, Chromecast, Blu-ray players, and more.",
+    description:
+      "Watch on Smart TVs, Playstation, Xbox, Apple TV, Chromecast, Blu-ray players, and more.",
     icon: <Tv className="size-10 text-primary" />,
   },
   {
     title: "Download & Watch",
-    description: "Save your favorites easily and always have something to watch offline.",
+    description:
+      "Save your favorites easily and always have something to watch offline.",
     icon: <Download className="size-10 text-blue-500" />,
   },
   {
     title: "Watch Everywhere",
-    description: "Stream unlimited movies and TV shows on your phone, tablet, laptop, and TV.",
+    description:
+      "Stream unlimited movies and TV shows on your phone, tablet, laptop, and TV.",
     icon: <Monitor className="size-10 text-primary" />,
   },
   {
     title: "Create Kids Profiles",
-    description: "Send kids on adventures with their favorite characters in a space made just for them.",
+    description:
+      "Send kids on adventures with their favorite characters in a space made just for them.",
     icon: <Users className="size-10 text-blue-500" />,
   },
 ];
 
 const Features = () => {
   return (
-    <section className="py-24 bg-background border-y border-border/50">
+    <section className="py-16 bg-background border-y border-border/50">
       <div className="container mx-auto px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {features.map((feature, index) => (
@@ -46,7 +50,9 @@ const Features = () => {
                 </div>
               </div>
               <div className="space-y-3">
-                <h3 className="text-xl font-bold tracking-tight">{feature.title}</h3>
+                <h3 className="text-xl font-bold tracking-tight">
+                  {feature.title}
+                </h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
                   {feature.description}
                 </p>

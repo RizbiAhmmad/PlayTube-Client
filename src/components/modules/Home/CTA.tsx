@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 const CTA = () => {
   return (
-    <section className="py-24 relative overflow-hidden bg-background">
+    <section className="py-16 relative overflow-hidden bg-background">
       {/* Dynamic Background elements for light/dark themes */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-1/4 left-1/4 size-[400px] bg-primary/10 rounded-full blur-[100px]" />

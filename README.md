@@ -21,6 +21,7 @@ To explore the full potential of the platform, including the admin features, use
 | Role            | Email                  | Password      |
 | :-------------- | :--------------------- | :------------ |
 | **Super Admin** | `superadmin@gmail.com` | `password123` |
+| **User**        | `user@gmail.com`       | `password123` |
 
 ---
 
