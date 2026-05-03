@@ -10,6 +10,7 @@ const MEDIA_ALLOWED_QUERY_KEYS = new Set([
   "searchTerm",
   "type",
   "pricingType",
+  "genres",
 ])
 
 const MediaPage = async ({

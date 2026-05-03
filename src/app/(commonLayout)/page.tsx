@@ -4,6 +4,10 @@ import Pricing from "@/components/modules/Home/Pricing";
 import CTA from "@/components/modules/Home/CTA";
 import Features from "@/components/modules/Home/Features";
 import Testimonials from "@/components/modules/Home/Testimonials";
+import StatsSection from "@/components/modules/Home/StatsSection";
+import FAQ from "@/components/modules/Home/FAQ";
+import Newsletter from "@/components/modules/Home/Newsletter";
+import BlogSection from "@/components/modules/Home/BlogSection";
 import { getMediaList } from "@/services/media.services";
 import { IMedia } from "@/types/media.types";
 
@@ -51,7 +55,6 @@ export default async function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       <Hero />
-
       <div className="space-y-4">
         {newlyAddedMedia.length > 0 && (
           <FeaturedMedia
@@ -90,10 +93,20 @@ export default async function Home() {
         )}
       </div>
 
+      <StatsSection />
+
       <Features />
+
+      <BlogSection />
+
       <Testimonials />
 
+      <FAQ />
+
+      <Newsletter />
+
       <Pricing />
+
       <CTA />
     </div>
   );
