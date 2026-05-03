@@ -3,38 +3,7 @@ import { ArrowRight, Calendar, User } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
-const blogs = [
-  {
-    title: "The Future of Cinema: VR and Beyond",
-    excerpt:
-      "How virtual reality is changing the way we experience storytelling in the 21st century.",
-    date: "May 1, 2024",
-    author: "James Wilson",
-    image:
-      "https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?q=80&w=2000&auto=format&fit=crop",
-    category: "Technology",
-  },
-  {
-    title: "10 Must-Watch Documentaries This Month",
-    excerpt:
-      "From deep-sea explorations to historical mysteries, here are the top picks for you.",
-    date: "April 28, 2024",
-    author: "Sarah Chen",
-    image:
-      "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2000&auto=format&fit=crop",
-    category: "Recommendations",
-  },
-  {
-    title: "Behind the Scenes: Directing a Blockbuster",
-    excerpt:
-      "An exclusive interview with the director of the year's biggest sci-fi epic.",
-    date: "April 25, 2024",
-    author: "Michael Ross",
-    image:
-      "https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=2000&auto=format&fit=crop",
-    category: "Interview",
-  },
-];
+import { blogPosts } from "@/constants/blogData";
 
 export default function BlogSection() {
   return (
@@ -58,9 +27,9 @@ export default function BlogSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {blogs.map((blog, index) => (
+          {blogPosts.map((blog) => (
             <article
-              key={index}
+              key={blog.id}
               className="group bg-background rounded-2xl overflow-hidden border border-border transition-all hover:shadow-xl"
             >
               <div className="relative h-48 w-full overflow-hidden">
@@ -93,7 +62,7 @@ export default function BlogSection() {
                   {blog.excerpt}
                 </p>
                 <Link
-                  href={`/blog/${index}`}
+                  href={`/blog/${blog.id}`}
                   className="inline-flex items-center text-sm font-bold text-primary group-hover:underline"
                 >
                   Read More <ArrowRight className="ml-2 size-4" />

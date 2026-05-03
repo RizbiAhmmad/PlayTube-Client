@@ -58,6 +58,7 @@ const Navbar = ({ userInfo, className }: NavbarProps) => {
   const menu: MenuItem[] = [
     { title: "Home", url: "/" },
     { title: "Movies & Series", url: "/media" },
+    { title: "Blog", url: "/blog" },
     {
        title: "Pages",
        url: "#",

@@ -43,9 +43,9 @@ export default async function Home() {
     .slice(0, 6);
 
   // 3. Editor's Picks (Just a shuffled or different slice)
-  const editorsPicks = [...allMedia]
-    .filter((m) => !newlyAddedMedia.includes(m))
-    .slice(0, 4);
+  // const editorsPicks = [...allMedia]
+  //   .filter((m) => !newlyAddedMedia.includes(m))
+  //   .slice(0, 4);
 
   // 4. Premium Selection (Explicitly filtered)
   const premiumMedia = allMedia
@@ -83,14 +83,14 @@ export default async function Home() {
           />
         )}
 
-        {editorsPicks.length > 0 && (
+        {/* {editorsPicks.length > 0 && (
           <FeaturedMedia
             title="Editor’s Picks"
             description="Hand-picked recommendations from our team of cinema experts."
             mediaList={editorsPicks}
             viewAllLink="/media"
           />
-        )}
+        )} */}
       </div>
 
       <StatsSection />
