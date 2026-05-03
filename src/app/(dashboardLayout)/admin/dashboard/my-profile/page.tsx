@@ -1,13 +1,13 @@
 import { getUserInfo } from "@/services/auth.services";
+import { redirect } from "next/navigation";
+import { IUser } from "@/types/user.types";
+import ProfileUpdateModal from "@/components/modules/Dashboard/ProfileUpdateModal";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Mail, Shield, User as UserIcon, Calendar, Activity } from "lucide-react";
 import Image from "next/image";
-import { redirect } from "next/navigation";
-import { IUser } from "@/types/user.types";
-import ProfileUpdateModal from "@/components/modules/Dashboard/ProfileUpdateModal";
 
-export default async function MyProfilePage() {
+export default async function AdminProfilePage() {
   const userInfo: IUser | null = await getUserInfo();
 
   if (!userInfo) {
@@ -18,8 +18,8 @@ export default async function MyProfilePage() {
     <div className="flex-1 space-y-8 p-4 md:p-10 pt-6">
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-6 border-b">
         <div>
-          <h2 className="text-4xl font-extrabold tracking-tight">My Profile</h2>
-          <p className="text-muted-foreground mt-1">Manage your account settings and personal information.</p>
+          <h2 className="text-4xl font-extrabold tracking-tight">Admin Profile</h2>
+          <p className="text-muted-foreground mt-1">Manage your administrative account and security settings.</p>
         </div>
         <ProfileUpdateModal user={userInfo} />
       </div>
@@ -46,11 +46,11 @@ export default async function MyProfilePage() {
             <CardTitle className="text-2xl font-bold z-10">{userInfo.name}</CardTitle>
             <CardDescription className="z-10 mt-1">{userInfo.email}</CardDescription>
             <div className="flex gap-2 mt-4 z-10">
-              <Badge variant={userInfo.role === "SUPER_ADMIN" ? "default" : userInfo.role === "ADMIN" ? "secondary" : "outline"} className="capitalize">
+              <Badge variant="default" className="capitalize">
                 {userInfo.role.toLowerCase().replace("_", " ")}
               </Badge>
               {userInfo.status && (
-                <Badge variant={userInfo.status === "ACTIVE" ? "success" : "destructive"}>
+                <Badge variant={userInfo.status === "ACTIVE" ? "default" : "destructive"}>
                   {userInfo.status}
                 </Badge>
               )}
@@ -107,13 +107,11 @@ export default async function MyProfilePage() {
             <div className="mt-8 pt-6 border-t">
               <h3 className="text-lg font-semibold flex items-center gap-2 mb-4">
                 <Activity className="w-5 h-5 text-primary" />
-                Account Status
+                Admin Status
               </h3>
               <div className="bg-muted/30 p-4 rounded-lg">
                 <p className="text-sm">
-                  {userInfo.emailVerified 
-                    ? "Your email is verified. Your account is fully active and you have access to all your dashboard features." 
-                    : "Please verify your email address to unlock all platform features. Check your inbox for a verification link."}
+                  You are logged in as an Administrator. You have full access to content management and moderation tools.
                 </p>
               </div>
             </div>

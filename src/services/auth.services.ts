@@ -120,3 +120,40 @@ export async function logoutUser() {
   cookieStore.delete("refreshToken");
   cookieStore.delete("better-auth.session_token");
 }
+
+export async function updateProfile(payload: any) {
+  try {
+    const cookieStore = await cookies();
+    const accessToken = cookieStore.get("accessToken")?.value;
+    const sessionToken = cookieStore.get("better-auth.session_token")?.value;
+
+    if (!accessToken) {
+      return { success: false, message: "Unauthorized" };
+    }
+
+    const isFormData = payload instanceof FormData;
+
+    const res = await fetch(`${BASE_API_URL}/auth/update-profile`, {
+      method: "PATCH",
+      headers: {
+        ...(isFormData ? {} : { "Content-Type": "application/json" }),
+        Cookie: `accessToken=${accessToken}; better-auth.session_token=${sessionToken}`,
+      },
+      body: isFormData ? payload : JSON.stringify(payload),
+    });
+
+    const result = await res.json();
+
+    if (!res.ok) {
+      return {
+        success: false,
+        message: result.message || "Failed to update profile",
+      };
+    }
+
+    return { success: true, data: result.data, message: result.message };
+  } catch (error: unknown) {
+    console.error("Error updating profile:", error);
+    return { success: false, message: "Something went wrong" };
+  }
+}

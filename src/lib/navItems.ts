@@ -100,6 +100,16 @@ export const adminNavItems: NavSection[] = [
       },
     ],
   },
+  {
+    title: "Account & Settings",
+    items: [
+      {
+        title: "Profile Management",
+        href: "/admin/dashboard/my-profile",
+        icon: "User",
+      },
+    ],
+  },
 ];
 
 export const getNavItemsByRole = (role: UserRole): NavSection[] => {
