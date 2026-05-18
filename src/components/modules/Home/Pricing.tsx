@@ -64,10 +64,6 @@ const Pricing = () => {
       className="py-16 relative overflow-hidden bg-background"
       id="pricing"
     >
-      {/* Background Orbs */}
-      <div className="absolute top-1/4 -right-24 size-96 bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 -left-24 size-96 bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
-
       <div className="container mx-auto px-8 relative z-10">
         <div className="text-center space-y-6 mb-20">
           <motion.div

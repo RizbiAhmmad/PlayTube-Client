@@ -1,6 +1,13 @@
 "use client";
 
-import { Menu, Film, Info, PlayCircle, LayoutDashboard, LogOut } from "lucide-react";
+import {
+  Menu,
+  Film,
+  Info,
+  PlayCircle,
+  LayoutDashboard,
+  LogOut,
+} from "lucide-react";
 import Link from "next/link";
 import {
   Accordion,
@@ -40,6 +47,7 @@ import { UserInfo } from "@/types/user.types";
 import { getDefaultDashboardRoute } from "@/lib/authUtils";
 
 import { ThemeToggle } from "./ThemeToggle";
+import Image from "next/image";
 
 interface MenuItem {
   title: string;
@@ -60,26 +68,28 @@ const Navbar = ({ userInfo, className }: NavbarProps) => {
     { title: "Movies & Series", url: "/media" },
     { title: "Blog", url: "/blog" },
     {
-       title: "Pages",
-       url: "#",
-       items: [
-         {
-           title: "About Us",
-           description: "Learn more about PlayTube and our mission",
-           icon: <Info className="size-5 shrink-0" />,
-           url: "/about",
-         },
-         {
-           title: "Pricing",
-           description: "Check our subscription plans",
-           icon: <Film className="size-5 shrink-0" />,
-           url: "/pricing",
-         },
-       ],
-     },
+      title: "Pages",
+      url: "#",
+      items: [
+        {
+          title: "About Us",
+          description: "Learn more about PlayTube and our mission",
+          icon: <Info className="size-5 shrink-0" />,
+          url: "/about",
+        },
+        {
+          title: "Pricing",
+          description: "Check our subscription plans",
+          icon: <Film className="size-5 shrink-0" />,
+          url: "/pricing",
+        },
+      ],
+    },
   ];
 
-  const dashboardRoute = userInfo ? getDefaultDashboardRoute(userInfo.role) : "/dashboard";
+  const dashboardRoute = userInfo
+    ? getDefaultDashboardRoute(userInfo.role)
+    : "/dashboard";
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -88,19 +98,28 @@ const Navbar = ({ userInfo, className }: NavbarProps) => {
     router.refresh();
   };
 
-
   return (
-    <section className={cn("sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60", className)}>
+    <section
+      className={cn(
+        "sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60",
+        className,
+      )}
+    >
       <div className="container mx-auto px-8">
         {/* Desktop Menu */}
         <nav className="hidden h-16 items-center justify-between lg:flex">
           {/* Left: Logo */}
           <div className="flex w-[200px] items-center">
             <Link href="/" className="flex items-center gap-2">
-              <PlayCircle className="size-8 text-primary" />
-              <span className="text-xl font-bold tracking-tight">
-                PlayTube
-              </span>
+              <Image
+                src="/Playtube_icon.png"
+                alt="PlayTube Logo"
+                width={40}
+                height={40}
+                className="rounded-lg"
+              />
+
+              <span className="text-xl font-bold tracking-tight">PlayTube</span>
             </Link>
           </div>
 
@@ -119,7 +138,10 @@ const Navbar = ({ userInfo, className }: NavbarProps) => {
             {userInfo ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative h-9 w-9 rounded-full p-0 overflow-hidden ring-offset-background transition-colors hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                  <Button
+                    variant="ghost"
+                    className="relative h-9 w-9 rounded-full p-0 overflow-hidden ring-offset-background transition-colors hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  >
                     <div className="flex h-full w-full items-center justify-center bg-primary/10 text-sm font-bold text-primary">
                       {userInfo.name.charAt(0).toUpperCase()}
                     </div>
@@ -128,7 +150,9 @@ const Navbar = ({ userInfo, className }: NavbarProps) => {
                 <DropdownMenuContent className="w-56" align="end" forceMount>
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium leading-none">{userInfo.name}</p>
+                      <p className="text-sm font-medium leading-none">
+                        {userInfo.name}
+                      </p>
                       <p className="text-xs leading-none text-muted-foreground">
                         {userInfo.email}
                       </p>
@@ -142,7 +166,10 @@ const Navbar = ({ userInfo, className }: NavbarProps) => {
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-destructive focus:text-destructive">
+                  <DropdownMenuItem
+                    onClick={handleLogout}
+                    className="cursor-pointer text-destructive focus:text-destructive"
+                  >
                     <LogOut className="mr-2 h-4 w-4" />
                     <span>Log out</span>
                   </DropdownMenuItem>
@@ -171,64 +198,69 @@ const Navbar = ({ userInfo, className }: NavbarProps) => {
           <div className="flex items-center gap-2">
             <ThemeToggle />
             <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Menu className="size-6" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                <SheetHeader className="text-left">
+                  <SheetTitle>
+                    <Link href="/" className="flex items-center gap-2">
+                      <PlayCircle className="size-8 text-primary" />
+                      <span className="text-xl font-bold tracking-tight">
+                        PlayTube
+                      </span>
+                    </Link>
+                  </SheetTitle>
+                  <SheetDescription className="sr-only">
+                    Mobile navigation menu for PlayTube.
+                  </SheetDescription>
+                </SheetHeader>
+                <div className="mt-8 flex flex-col gap-6">
+                  <Accordion type="single" collapsible className="w-full">
+                    {menu.map((item) => renderMobileMenuItem(item))}
+                  </Accordion>
 
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Menu className="size-6" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-              <SheetHeader className="text-left">
-                <SheetTitle>
-                  <Link href="/" className="flex items-center gap-2">
-                    <PlayCircle className="size-8 text-primary" />
-                    <span className="text-xl font-bold tracking-tight">PlayTube</span>
-                  </Link>
-                </SheetTitle>
-                <SheetDescription className="sr-only">
-                  Mobile navigation menu for PlayTube.
-                </SheetDescription>
-              </SheetHeader>
-              <div className="mt-8 flex flex-col gap-6">
-                <Accordion
-                  type="single"
-                  collapsible
-                  className="w-full"
-                >
-                  {menu.map((item) => renderMobileMenuItem(item))}
-                </Accordion>
+                  <div className="px-4 py-2 flex flex-col gap-4">
+                    {/* Non-accordion mobile links like Home / Media need padding too */}
+                  </div>
 
-                <div className="px-4 py-2 flex flex-col gap-4">
-                   {/* Non-accordion mobile links like Home / Media need padding too */}
+                  <div className="flex flex-col gap-3 pt-4 border-t">
+                    {userInfo ? (
+                      <>
+                        <Button
+                          asChild
+                          variant="outline"
+                          className="justify-start gap-2"
+                        >
+                          <Link href={dashboardRoute}>
+                            <LayoutDashboard className="size-4" />
+                            Dashboard
+                          </Link>
+                        </Button>
+                        <Button
+                          variant="destructive"
+                          onClick={handleLogout}
+                          className="justify-start gap-2"
+                        >
+                          <LogOut className="size-4" />
+                          Logout
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button asChild variant="outline">
+                          <Link href="/login">Login</Link>
+                        </Button>
+                        <Button asChild>
+                          <Link href="/register">Sign up</Link>
+                        </Button>
+                      </>
+                    )}
+                  </div>
                 </div>
-
-                <div className="flex flex-col gap-3 pt-4 border-t">
-                  {userInfo ? (
-                    <>
-                      <Button asChild variant="outline" className="justify-start gap-2">
-                        <Link href={dashboardRoute}>
-                          <LayoutDashboard className="size-4" />
-                          Dashboard
-                        </Link>
-                      </Button>
-                      <Button variant="destructive" onClick={handleLogout} className="justify-start gap-2">
-                        <LogOut className="size-4" />
-                        Logout
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <Button asChild variant="outline">
-                        <Link href="/login">Login</Link>
-                      </Button>
-                      <Button asChild>
-                        <Link href="/register">Sign up</Link>
-                      </Button>
-                    </>
-                  )}
-                </div>
-              </div>
-            </SheetContent>
+              </SheetContent>
             </Sheet>
           </div>
         </div>
@@ -241,7 +273,9 @@ const renderMenuItem = (item: MenuItem) => {
   if (item.items) {
     return (
       <NavigationMenuItem key={item.title}>
-        <NavigationMenuTrigger className="bg-transparent hover:bg-muted">{item.title}</NavigationMenuTrigger>
+        <NavigationMenuTrigger className="bg-transparent hover:bg-muted">
+          {item.title}
+        </NavigationMenuTrigger>
         <NavigationMenuContent>
           <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
             {item.items.map((subItem) => (
@@ -263,7 +297,7 @@ const renderMenuItem = (item: MenuItem) => {
         <Link
           href={item.url}
           className={cn(
-            "group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent-foreground focus:bg-muted focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+            "group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent-foreground focus:bg-muted focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50",
           )}
         >
           {item.title}
@@ -276,7 +310,11 @@ const renderMenuItem = (item: MenuItem) => {
 const renderMobileMenuItem = (item: MenuItem) => {
   if (item.items) {
     return (
-      <AccordionItem key={item.title} value={item.title} className="border-none px-4">
+      <AccordionItem
+        key={item.title}
+        value={item.title}
+        className="border-none px-4"
+      >
         <AccordionTrigger className="text-base py-3 font-medium hover:no-underline">
           {item.title}
         </AccordionTrigger>
@@ -291,7 +329,9 @@ const renderMobileMenuItem = (item: MenuItem) => {
                 {subItem.icon}
                 <div>
                   <div className="font-medium">{subItem.title}</div>
-                  <div className="text-xs text-muted-foreground">{subItem.description}</div>
+                  <div className="text-xs text-muted-foreground">
+                    {subItem.description}
+                  </div>
                 </div>
               </Link>
             ))}

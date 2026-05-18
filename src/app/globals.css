@@ -145,3 +145,25 @@
 .ProseMirror [style*='text-align: justify'] { text-align: justify; }
 .ProseMirror hr { @apply border-t border-muted my-6; }
 .ProseMirror h3 { @apply text-lg font-bold mb-1 mt-3; }
+
+/* Lenis Smooth Scroll */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}

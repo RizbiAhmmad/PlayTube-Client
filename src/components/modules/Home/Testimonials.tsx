@@ -33,7 +33,7 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section className="py-16 bg-muted/30">
+    <section className="py-16 bg-background">
       <div className="container mx-auto px-8">
         <div className="text-center mb-20 space-y-4">
           <h2 className="text-4xl md:text-6xl font-black tracking-tight">

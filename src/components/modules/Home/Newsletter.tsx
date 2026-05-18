@@ -6,13 +6,7 @@ import { Mail } from "lucide-react";
 
 export default function Newsletter() {
   return (
-    <section className="py-16 bg-white dark:bg-black text-black dark:text-white overflow-hidden relative border-y border-border">
-      {/* Background patterns */}
-      <div className="absolute top-0 left-0 w-full h-full opacity-5 dark:opacity-10 pointer-events-none">
-        <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[80%] bg-primary rounded-full blur-3xl"></div>
-        <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[80%] bg-primary rounded-full blur-3xl"></div>
-      </div>
-
+    <section className="py-16 bg-background text-foreground overflow-hidden relative">
       <div className="container mx-auto px-4 relative z-10 text-center">
         <div className="max-w-2xl mx-auto">
           <div className="inline-flex p-3 bg-primary/10 rounded-2xl mb-6 backdrop-blur-sm">

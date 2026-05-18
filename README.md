@@ -31,7 +31,7 @@ To explore the full potential of the platform, including the admin features, use
 - **🔐 Robust Authentication:** Secure login, signup, and email verification using **Better Auth**.
 - **🛠️ Admin Dashboard:** Comprehensive management of users, videos, and platform analytics.
 - **🎨 Modern UI/UX:** Built with **Tailwind CSS 4** and **Shadcn UI** for a premium feel.
-- **⚡ High Performance:** Optimized with **Next.js 15+** and **React 19**.
+- **⚡ High Performance:** Optimized with **Next.js 16** and **React 19**.
 - **💳 Premium Subscriptions:** Integrated with **Stripe** for seamless payments.
 - **📱 Fully Responsive:** Beautiful experience across all devices.
 

@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/sonner";
 import FloatingChatbot from "@/components/modules/Chatbot/FloatingChatbot";
 
 import { ThemeProvider } from "@/providers/ThemeProvider";
+import SmoothScroll from "@/components/shared/SmoothScroll";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,6 +22,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "PlayTube",
   description: "A PlayTube client built with Next.js and TypeScript.",
+  icons: {
+    icon: "/Playtube_icon.png",
+  },
 };
 
 export const dynamic = "force-dynamic";
@@ -42,7 +46,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <QueryProviders>
-            {children}
+            <SmoothScroll>
+              {children}
+            </SmoothScroll>
             <FloatingChatbot />
             <Toaster richColors position="top-right" />
           </QueryProviders>
@@ -51,4 +57,3 @@ export default function RootLayout({
     </html>
   );
 }
-
